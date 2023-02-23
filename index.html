@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QRScannerLiceoDannunzio</title>
+    <link rel="stylesheet" href="./style/style.css" />
+  </head>
+  <body>
+    <div id="main_container">
+      <!--UNO-->
+      <div id="uno" style="width: 600px; height: 600px"></div>
+      <!--DUE-->
+      <div id="due">
+        <div id="display"></div>
+      </div>
+      <!--TRE-->
+      <div id="tre">
+        <div id="true">
+          <img src="./img/spunta.png" class="confirm_abort" alt="OK" />
+        </div>
+        <div id="false">
+          <img src="./img/croce.png" class="confirm_abort" alt="ABORT" />
+        </div>
+      </div>
+      <div id="input">
+        <input type="text" placeholder="Ip Adress" />
+        <div id="submit">Submit</div>
+      </div>
+    </div>
+    <script src="./js/camera.js"></script>
+    <script src="./js/qr_scanner.js"></script>
+    <script type="module" src="./js/index.js"></script>
+  </body>
+</html>
