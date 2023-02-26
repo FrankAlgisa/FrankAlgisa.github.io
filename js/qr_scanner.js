@@ -68,13 +68,54 @@ docReady(function () {
         .innerHTML;
       display.innerHTML = "";
       display.innerHTML = contentMax;
-
       document.querySelectorAll("video")[0].classList.add("border_colored");
       setTimeout(() => {
         document
           .querySelectorAll("video")[0]
           .classList.remove("border_colored");
-      }, 2000);
+      }, 700);
+      if (Ip == undefined || Ip.length <= 0) {
+        input.setAttribute("style", "border: solid 2px red !important");
+        setTimeout(() => {
+          input.setAttribute("style", "");
+        }, 800);
+      } else {
+        /*OPZIONI*/
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://" + Ip + "/" + contentMax + "/");
+        xhr.setRequestHeader("Content-Type", "text/plain");
+        xhr.onreadystatechange = function () {
+          const beep = new Audio("./js/beep.mp3");
+          const beep2 = new Audio("./js/beep2.mp3");
+          const beep3 = new Audio("./js/beep3.mp3");
+
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              beep.play();
+              dispaly.innerHTML = xhr.response;
+              due.setAttribute("style", "background-color: green !important");
+              setTimeout(() => {
+                due.setAttribute("style", "background-color: inherit");
+              }, 1000);
+            } else if (xhr.status === 13) {
+              beep2.play();
+              dispaly.innerHTML = xhr.response;
+              due.setAttribute("style", "background-color: yellow !important");
+              setTimeout(() => {
+                due.setAttribute("style", "background-color: inherit");
+              }, 1000);
+            } else {
+              beep3.play();
+              dispaly.innerHTML = "Errore: " + xhr.response;
+              due.setAttribute("style", "background-color: red !important");
+              setTimeout(() => {
+                due.setAttribute("style", "background-color: inherit");
+              }, 1000);
+            }
+          }
+        };
+        xhr.send();
+      }
       ++codeId;
     }
   }
@@ -119,54 +160,6 @@ const container = document.querySelector("#main_container");
 const due = document.querySelector("#due");
 let Ip;
 
-/*BOTTONE TRUE*/
-btnTrue.addEventListener("click", () => {
-  btnTrue.classList.toggle("border_button_colored");
-
-  if (Ip == undefined || Ip.length <= 0) {
-    alert("Fornisci un Ip (2)");
-  } else {
-    /*OPZIONI*/
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://" + Ip + "/" + contentMax + "/");
-    xhr.setRequestHeader("Content-Type", "text/plain");
-    xhr.onreadystatechange = function () {
-      const beep = new Audio("./js/beep.mp3");
-      const beep2 = new Audio("./js/beep2.mp3");
-      const beep3 = new Audio("./js/beep3.mp3");
-
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          beep.play();
-          dispaly.innerHTML = xhr.response;
-          due.setAttribute("style", "background-color: green !important");
-          setTimeout(() => {
-            due.setAttribute("style", "background-color: inherit");
-          }, 1000);
-        } else if (xhr.status === 13) {
-          beep2.play();
-          dispaly.innerHTML = xhr.response;
-          due.setAttribute("style", "background-color: yellow !important");
-          setTimeout(() => {
-            due.setAttribute("style", "background-color: inherit");
-          }, 1000);
-        } else {
-          beep3.play();
-          dispaly.innerHTML = "Errore: " + xhr.response;
-          due.setAttribute("style", "background-color: red !important");
-          setTimeout(() => {
-            due.setAttribute("style", "background-color: inherit");
-          }, 1000);
-        }
-      }
-    };
-    xhr.send();
-  }
-  setTimeout(() => {
-    btnTrue.classList.remove("border_button_colored");
-  }, 100);
-});
-
 submit.addEventListener("click", () => {
   if (input.value.length <= 0) {
     alert("Fornisci un Ip (1)");
@@ -175,14 +168,4 @@ submit.addEventListener("click", () => {
     input.setAttribute("placeholder", Ip);
     input.value = "";
   }
-});
-
-btnFalse.addEventListener("click", () => {
-  btnFalse.classList.toggle("border_button_colored");
-  setTimeout(() => {
-    btnFalse.classList.remove("border_button_colored");
-  }, 100);
-  display.innerHTML = "";
-  contentMax = "";
-  lastMessage = "";
 });
