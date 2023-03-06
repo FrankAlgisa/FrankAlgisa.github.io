@@ -82,7 +82,7 @@ docReady(function () {
       } else {
         /*OPZIONI*/
         const xhr = new XMLHttpRequest();
-        xhr.open("GET", "https://" + Ip + "/" + contentMax + "/");
+        xhr.open("GET", "https://" + Ip + "/" + contentMax);
         xhr.setRequestHeader("Content-Type", "text/plain");
         xhr.onreadystatechange = function () {
           const beep = new Audio("./js/beep.mp3");
