@@ -70,6 +70,7 @@ p {
   justify-content: center;
   align-items: center;
   margin-bottom: 5vh !important;
+  overflow: scroll !important;
 }
 #preview {
   margin-top: 0 !important;
